@@ -65,7 +65,7 @@ app.post("/register", async (req, res)=>{
                 [username, hash]
             );
             res.redirect("/");
-            // registermail.signUp(username);
+            registermail.signUp(username);
         })
     }
     } catch(error){
@@ -129,7 +129,7 @@ passport.use(
                     }else{
                         if(result){
                             return cb(null, userID);
-                            // loginmail.Login(username);
+                            registermail.signUp(username);
                         }else{
                             return cb("please check your email or password");
                         }
@@ -137,7 +137,7 @@ passport.use(
                 });
             }else{
                 return cb(null, false);
-                // registermail.signUp(username)
+                loginmail.Login(profile.email)
             }
         }catch (error){
             cb(error)
@@ -168,12 +168,14 @@ passport.use(
                         if(err){
                             return cb(err)
                         }else{
-                            return cb(null, result)
+                            return cb(null, result);
+                            registermail.signUp(profile.email)
                         }
                     }
                 )
             }else{
-                return cb(null, checkUser.rows[0])
+                return cb(null, checkUser.rows[0]);
+                loginmail.Login(profile.email)
             }
         }catch(err){
             return cb(err);
@@ -201,9 +203,11 @@ passport.use(new FacebookStrategy({
                 [profile.displayName || profile.email, profile.id]
             )
             return cb(null, UserSaveData);
+            registermail.signUp(profile.email)
         }
         else{
             return cb(null, userRow.rows[0]);
+            loginmail.Login(profile)
         }
     }catch (error){
         console.log(error);
