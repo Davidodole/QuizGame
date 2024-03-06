@@ -1,0 +1,28 @@
+<%- include('partials/header') -%>
+
+<div class="container">
+    <nav>
+        <div class="logo">QuizGame</div>
+        <div class="sign_up"><a href="/">Login</a></div>
+    </nav>
+    <div class="login_box center" style="margin-top: 8em;">
+        <div class="login_manual">
+            <h2>Create an account</h2>
+            <form action="" method="post">
+                <label for="email">Your Email</label>
+                <input type="email" name="username" id="username" autocomplete="on">
+                <label for="password">Your Password</label>
+                <input type="password" name="password" id="password" autocomplete="on" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{9,}" title="Password must contain a Uppercase, Lowercase, character and must be more than 9 length">
+                <label for="password">Confirm Password</label>
+                <input type="password" name="confirmPassword" id="confirmPassword" autocomplete="on" >
+                <button type="submit">Submit</button>
+                <span id="text" class="center" style="margin-top: 10px;"></span>
+            </form>
+        </div>
+    </div>
+    <footer><p>&copy; copyright of David Castillo's</p></footer>
+</div>
+
+
+
+<%- include('partials/footer') -%>

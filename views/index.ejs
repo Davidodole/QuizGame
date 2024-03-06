@@ -1,0 +1,46 @@
+<%- include('partials/header') -%>
+
+<div class="container">
+    <nav>
+        <div class="logo">QuizGame</div>
+        <div class="sign_up"><a href="/register">Register</a></div>
+    </nav>
+    <div class="middle_box">
+    <div class="content">
+        <h1>Welcome to QuizGame</h1>
+        <p>let test your IQ and we score you base on your intelligency</p>
+    </div>
+    <div class="wrap_user" style="margin-top: 30px;">
+        <div class="login_box">
+            <div class="login_auto">
+                <a href="/auth/google">
+                    <button><img src="/image/google.jpg" alt=""></button>
+                    <span>Continue with Google</span>
+                </a>
+                <a href="/auth/Facebook">
+                    <button><img src="image/Facebook.png" alt=""></button>
+                    <span>Continue with Facebook</span>
+                </a>
+            </div>
+            <div class="login_manual">
+                <h2>Please Login</h2>
+                <form action="" method="post">
+                    <label for="email">Your Email</label>
+                    <input type="email" name="username" id="username" autocomplete="on">
+                    <label for="password">Your Password</label>
+                    <input type="password" name="password" id="password" autocomplete="on" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{9,}" title="Password must contain a Uppercase, Lowercase, character and must be more than 9 length">
+                    <div class="check">
+                    <input type="checkbox" name="checkbox" id="checkbox">
+                    <span>show password</span>
+                    </div>
+                    <button>Submit</button>
+                    <span id="text" class="center" style="margin-top: 10px;"></span>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+    <footer><p>&copy; copyright of David Castillo's</p></footer>
+</div>
+
+<%- include('partials/footer') -%>
