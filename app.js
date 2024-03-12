@@ -1,5 +1,6 @@
 // requiring npm packages
-const express =require("express");
+const express = require("express");
+const app = express();
 const ejs = require("ejs");
 const pg = require("pg");
 const passport = require("passport");
@@ -16,16 +17,13 @@ const saltRound = 15
 
 // connection to database 
 const db = new pg.Client({
-    user: "postgres",
-    host: 'localhost',
-    database: "Quiztable",
-    password: "david",
-    port: 5432,
+    user: process.env.PG_USER,
+    host: process.env.PG_HOST,
+    database: process.env.PG_DATABASE,
+    password: process.env.PG_PASSWORD,
+    port: process.env.PG_PORT,
 });
 db.connect().then(()=> console.log("database connected!"));
-
-// require the express to app variable 
-const app = express();
 
 // middleware of the website 
 app.set('view engine', 'ejs');
@@ -71,6 +69,9 @@ app.post("/register", async (req, res)=>{
     } catch(error){
         return error;
     }
+});
+app.post("/success",(req, res)=>{
+    res.redirect("/success")
 })
 
 
@@ -101,13 +102,14 @@ app.get("/",(req, res)=>{
 app.get("/register", (req, res)=>{
     res.render("register");
 });
-app.get("/success",(req, res)=>{
+app.get("/success", (req, res)=>{
     if(req.isAuthenticated()){
-        res.render("success");
+        res.render("success",{name: "foooo"});
     }else{
         res.redirect("/");
     }
 });
+
 
 
 
@@ -129,7 +131,7 @@ passport.use(
                     }else{
                         if(result){
                             return cb(null, userID);
-                            registermail.signUp(username);
+                            // registermail.signUp(username);
                         }else{
                             return cb("please check your email or password");
                         }
@@ -137,7 +139,7 @@ passport.use(
                 });
             }else{
                 return cb(null, false);
-                loginmail.Login(profile.email)
+                // loginmail.Login(profile.email)
             }
         }catch (error){
             cb(error)
@@ -169,13 +171,13 @@ passport.use(
                             return cb(err)
                         }else{
                             return cb(null, result);
-                            registermail.signUp(profile.email)
+                            // registermail.signUp(profile.email[0])
                         }
                     }
                 )
             }else{
                 return cb(null, checkUser.rows[0]);
-                loginmail.Login(profile.email)
+                // loginmail.Login(profile.email[0])
             }
         }catch(err){
             return cb(err);
@@ -222,13 +224,14 @@ passport.use(new FacebookStrategy({
 
 
 passport.serializeUser((user, cb)=>{
-    return cb(null, user)
+    return cb(null, user);
+    console.log(user);
 });
 passport.deserializeUser((user, cb)=>{
-    return cb(null, user)
+    return cb(null, user);
+    console.log(user);
 });
-
 
 
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, ()=> console.log(`http://127.0.0.1:${PORT}`))
+app.listen(PORT, ()=> console.log(`http://127.0.0.1:${PORT}`));
