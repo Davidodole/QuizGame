@@ -169,3 +169,13 @@ footer p{
 li{
     font-size: 200px;
 }
+.logout button{
+    padding: 5px 10px;
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: #fff;
+    background-color: transparent;
+    border: 1px solid #eafbfb;
+    border-radius: 4px;
+    text-transform: capitalize;
+}

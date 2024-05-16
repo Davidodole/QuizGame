@@ -85,6 +85,14 @@ app.get("/auth/google/success", passport.authenticate("google",{
     failureRedirect: "/",
 }));
 
+// handling the logout session of the website 
+app.get("/logout",(req, res)=>{
+    req.logout((err)=>{
+        if(err) throw err;
+        res.redirect("/")
+    })
+})
+
 // handling the facebook router path
 app.get('/auth/facebook',passport.authenticate('facebook',{
     scope: ['user_friends' ] 
@@ -104,7 +112,12 @@ app.get("/register", (req, res)=>{
 });
 app.get("/success", (req, res)=>{
     if(req.isAuthenticated()){
-        res.render("success",{name: "foooo"});
+        fetch("https://opentdb.com/api.php?amount=50&type=multiple")
+        .then(res => res.json())
+        .then(data=>{
+            let quiz = data.results;
+            res.render("success",{Quiz : quiz});
+        });
     }else{
         res.redirect("/");
     }
@@ -131,7 +144,6 @@ passport.use(
                     }else{
                         if(result){
                             return cb(null, userID);
-                            // registermail.signUp(username);
                         }else{
                             return cb("please check your email or password");
                         }
@@ -139,7 +151,6 @@ passport.use(
                 });
             }else{
                 return cb(null, false);
-                // loginmail.Login(profile.email)
             }
         }catch (error){
             cb(error)
@@ -171,13 +182,13 @@ passport.use(
                             return cb(err)
                         }else{
                             return cb(null, result);
-                            // registermail.signUp(profile.email[0])
+                            registermail.signUp(profile.email[0])
                         }
                     }
                 )
             }else{
                 return cb(null, checkUser.rows[0]);
-                // loginmail.Login(profile.email[0])
+                loginmail.Login(profile.email[0])
             }
         }catch(err){
             return cb(err);
